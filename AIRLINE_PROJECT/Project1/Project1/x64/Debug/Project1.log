@@ -1,4 +1,0 @@
-﻿  plane.cpp
-C:\Users\nnoah\OneDrive\Desktop\CMPE130\Project1\Project1\plane.cpp(12,15): warning C4804: '<': unsafe use of type 'bool' in operation
-C:\Users\nnoah\OneDrive\Desktop\CMPE130\Project1\Project1\plane.cpp(131): warning C4715: 'Plane::getSeatNum': not all control paths return a value
-  Project1.vcxproj -> C:\Users\nnoah\OneDrive\Desktop\CMPE130\Project1\x64\Debug\Project1.exe
