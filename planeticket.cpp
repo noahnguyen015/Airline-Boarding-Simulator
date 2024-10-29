@@ -9,6 +9,8 @@ planeTicket::planeTicket(string seatNumber, string CardHeld, string classType, b
 	this->military = military;
 }
 
+//overloader to check ticket data
+//TO_DO: change boolean data to show false and true instead of 0 and 1
 ostream& operator<<(ostream &os, planeTicket ticket){
 	os << ticket.seatNumber << ", ";
 	os << ticket.CardHeld << ", ";

@@ -20,50 +20,37 @@ Plane::Plane() {
 }
 
 void Plane::getTickets(){
-	string ticketData[5];
-	bool specialData[2];
+	string ticketData[5];				//ticketData holds the string data of the ticket/ keeps track of index, elements in a ticket		
+	bool specialData[2];				//use to hold if the person has special needs
 
 	ifstream istream;
 	ofstream ostream;
-	int i = 0;
-	int j = 0;
-	int arridx = 0;
+	int i = 0;							//keep track of string data
+	int j = 0;							//keep track of boolean data
 
 	istream.open("test.txt");
 
-	while (istream >> ticketData[i]) {
-
-		if(ticketData[i] == "false" ){
-
-			if(j == 2) {
-				j = 0;
-				specialData[j] = false;
-
-				j++;
-			} 
-			else {
-				specialData[j] = false;
-				j++;
-			}
+	while (istream >> ticketData[i]) {	//read each string in the file
+		if(ticketData[i] == "false" ){	//check if it is one of the boolean data (true or false)
+			if(j == 2) 					//if more than 2 (means you already recorded 2 elements)
+				j = 0; 					//reset to 0
+			specialData[j] = false; 	//false = 0
+			j++;						
 		}
 		else {
-			if(j == 2) {
+			if(j == 2) 					//same but with true instead of false
 				j = 0;
-				specialData[j] = true;
-				j++;
-			} 
-			else {
-				specialData[j] = true;
-				j++;
-			}
+			specialData[j] = true;		//true = 1
+			j++;
 		}
 
 		i++;
 
-		if(i == 5){
+		if(i == 5){						//once big enough (meaning 5 elements are read, make a ticket)
+			//generate a ticket
 			planeTicket ticket(ticketData[0], ticketData[1], ticketData[2], specialData[0], specialData[1]);
-			insertTicket(ticket);
-			i = 0;
+			insertTicket(ticket);		//put ticket into array tickets 
+			i = 0;						//reset to read 5 more elements
 		}
 	}
 	istream.close();
@@ -187,10 +174,11 @@ int Plane::getSeatNum(char seatChar)
 		return 0;
 }		
 
+/*USED FOR TESTING, can be altered/deleted later*/
 void Plane::readTicket(){
 	for(int i = 0; i < ticketSize; i++){
 		cout << tickets[i];
-		boardPlane(tickets[i]);
+		boardPlane(tickets[i]);	//grabs all tickets and boards them 
 	}
 }
 
