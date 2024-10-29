@@ -1,0 +1,3 @@
+A3 GOLD FirstClass false false
+B3 GOLD Business false false
+D1 GOLD Economy false false

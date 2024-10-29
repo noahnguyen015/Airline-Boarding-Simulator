@@ -9,6 +9,18 @@ planeTicket::planeTicket(string seatNumber, string CardHeld, string classType, b
 	this->military = military;
 }
 
+ostream& operator<<(ostream &os, planeTicket ticket){
+	os << ticket.seatNumber << ", ";
+	os << ticket.CardHeld << ", ";
+	os << ticket.classType << ", ";
+	os << ticket.specialNeeds << ", ";
+	os << ticket.military;
+	os << endl;
+	return os;
+}
+
+
+
 bool planeTicket::operator <(planeTicket otherticket)
 {
 	return false;

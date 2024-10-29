@@ -19,6 +19,61 @@ Plane::Plane() {
 	}
 }
 
+void Plane::getTickets(){
+	string ticketData[5];
+	bool specialData[2];
+
+	ifstream istream;
+	ofstream ostream;
+	int i = 0;
+	int j = 0;
+	int arridx = 0;
+
+	istream.open("test.txt");
+
+	while (istream >> ticketData[i]) {
+
+		if(ticketData[i] == "false" ){
+
+			if(j == 2) {
+				j = 0;
+				specialData[j] = false;
+
+				j++;
+			} 
+			else {
+				specialData[j] = false;
+				j++;
+			}
+		}
+		else {
+			if(j == 2) {
+				j = 0;
+				specialData[j] = true;
+				j++;
+			} 
+			else {
+				specialData[j] = true;
+				j++;
+			}
+		}
+
+		i++;
+
+		if(i == 5){
+			planeTicket ticket(ticketData[0], ticketData[1], ticketData[2], specialData[0], specialData[1]);
+			insertTicket(ticket);
+			i = 0;
+		}
+	}
+	istream.close();
+}
+
+void Plane::insertTicket (planeTicket ticket){
+	tickets[ticketSize] = ticket;
+	ticketSize++;
+}
+
 void Plane::printFirstClass()
 {
 	cout << "\t" << "|----------First Class----------|" << endl;
@@ -128,7 +183,16 @@ int Plane::getSeatNum(char seatChar)
 		return 8;
 	else if (seatChar == '9')
 		return 9;
+	else
+		return 0;
 }		
+
+void Plane::readTicket(){
+	for(int i = 0; i < ticketSize; i++){
+		cout << tickets[i];
+		boardPlane(tickets[i]);
+	}
+}
 
 void Plane::boardPlane(planeTicket ticket)
 {
