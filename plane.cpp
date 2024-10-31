@@ -20,7 +20,7 @@ Plane::Plane() {
 }
 
 void Plane::getTickets(){
-	string ticketData[5];				//ticketData holds the string data of the ticket/ keeps track of index, elements in a ticket		
+	string ticketData[7];				//ticketData holds the string data of the ticket/ keeps track of index, elements in a ticket		
 	bool specialData[2];				//use to hold if the person has special needs
 
 	ifstream istream;
@@ -46,9 +46,9 @@ void Plane::getTickets(){
 
 		i++;
 
-		if(i == 5){						//once big enough (meaning 5 elements are read, make a ticket)
+		if(i == 7){						//once big enough (meaning 5 elements are read, make a ticket)
 			//generate a ticket
-			planeTicket ticket(ticketData[0], ticketData[1], ticketData[2], specialData[0], specialData[1]);
+			planeTicket ticket(ticketData[0], ticketData[1], ticketData[2], ticketData[3], ticketData[4], specialData[0], specialData[1]);
 			insertTicket(ticket);		//put ticket into array tickets 
 			i = 0;						//reset to read 5 more elements
 		}
@@ -177,7 +177,7 @@ int Plane::getSeatNum(char seatChar)
 /*USED FOR TESTING, can be altered/deleted later*/
 void Plane::readTicket(){
 	for(int i = 0; i < ticketSize; i++){
-		cout << tickets[i];
+	  	cout << tickets[i];
 		boardPlane(tickets[i]);	//grabs all tickets and boards them 
 	}
 }
@@ -214,19 +214,19 @@ void Plane::boardPlane(planeTicket ticket)
 	else {
 		//economy seats
 		if (seatLetter[0] == 'A')
-			ticketIdx = 1 + (rowNum * 4);
+			ticketIdx = 1 + (rowNum * 6);
 		else if (seatLetter[0] == 'B')
-			ticketIdx = 2 + (rowNum * 4);
+			ticketIdx = 2 + (rowNum * 6);
 		else if (seatLetter[0] == 'C')
-			ticketIdx = 3 + (rowNum * 4);
+			ticketIdx = 3 + (rowNum * 6);
 		else if (seatLetter[0] == 'D')
-			ticketIdx = 4 + (rowNum * 4);
+			ticketIdx = 4 + (rowNum * 6);
 		else if (seatLetter[0] == 'E')
-			ticketIdx = 5 + (rowNum * 4);
-		else if (seatLetter[0] == 'F')
-			ticketIdx = 6 + (rowNum * 4);
+			ticketIdx = 5 + (rowNum * 6);
+		else if (seatLetter[0] == 'F'){
+			ticketIdx = 6 + (rowNum * 6);
+		}
 
-		
 		eseats[ticketIdx] = "[X]";
 	}
 }

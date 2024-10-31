@@ -9,7 +9,7 @@ public:
 
 	planeTicket() {};
 
-	planeTicket(string seatNumber, string CardHeld, string classType, bool specialNeeds, bool military);
+	planeTicket(string firstName, string lastName, string seatNumber, string CardHeld, string classType, bool specialNeeds, bool military);
 
 	friend ostream& operator <<(ostream &os, planeTicket ticket);
 
@@ -18,6 +18,8 @@ public:
 	string getClass();
 
 private:
+	string firstName = "";
+	string lastName = "";
 	string seatNumber = "";
 	string CardHeld = "";
 	string classType = "";

@@ -1,3 +1,64 @@
-A3 GOLD FirstClass false false
-B3 GOLD Business false false
-D1 GOLD Economy false false
+Marcus Smart A1 NONE FirstClass false false
+Gordan Ramsay B1 NONE FirstClass false false
+Mindy Mint C1 NONE FirstClass false false
+
+Mr Potato A2 SILVER FirstClass true false
+Kenny Tran C2 SILVER FirstClass false false
+Johnny Waters D2 NONE FirstClass false false
+
+John Smith A3 GOLD FirstClass false false
+Ling Tang B3 NONE FirstClass false false
+Danny Pham C3 SILVER FirstClass false false
+Anthony Butters D3 NONE FirstClass false false
+
+
+Christian Rivera A1 NONE Business false false
+Micheal Mitchell C1 SILVER Business false false
+Ms Potato D1 GOLD Business false false
+
+Master Chief A2 GOLD Business false true
+Sergeant Sergeant B2 NONE Business false true
+Mindy Lee C2 Silver Business false false
+Tyson Cars D2 Silver Business false false
+
+Choi Hyeon-joon A3 NONE Business false false
+James Johnson B3 GOLD Business false false
+Allison Avery D3 GOLD Business false false
+
+Diana Porter C4 SILVER Business false false
+Disco Dan D4 GOLD Business false false
+
+Fiona Jackson A5 GOLD Business false false
+Wendy McCarthy B5 NONE Business true false
+
+
+Gabriel Jones B1 NONE Economy false false
+Sean Sung C1 NONE Economy false false
+Noah Nguyen D1 NONE Economy false false
+Peter Parker E1 NONE Economy false false
+Justin James F1 NONE Economy false false
+
+Corey Jones A2 NONE Economy false false
+Jenny Tran  B2 NONE Economy false false
+Candice Jones C2 NONE Economy false false
+Chris Park D2 NONE Economy false false
+Linda Ann E2 NONE Economy false false
+Christina Rivera F2 NONE Economy false false
+
+Wheel Guy A3 GOLD Economy true false
+Jake Johnson C3 SILVER Economy false false
+Christian Chris D3 SILVER Economy false false
+Chair Guy E3 NONE Economy false false
+Kid Kiddo F3 NONE Economy false false
+
+Crutch Girl A4 NONE Economy true false
+Cast Woman C4 NONE Economy true true
+Julio Gomez E4 NONE Economy false false
+
+Amy Carter A5 NONE Economy false false
+Boris Hill B5 NONE Economy false false
+Kendall Johnson C5 NONE Economy false false
+Justin Lin D5 NONE Economy false false
+Zoro Roronoa F5 NONE Economy false false
+
+
