@@ -13,22 +13,17 @@ planeTicket::planeTicket(string firstName, string lastName, string seatNumber, s
 
 //overloader to check ticket data
 //TO_DO: change boolean data to show false and true instead of 0 and 1
-ostream& operator<<(ostream &os, planeTicket ticket){
-	os << ticket.firstName << "/" << ticket.lastName << ", ";
+ostream& operator<<(ostream &os, planeTicket& ticket){
+	os << ticket.firstName << " " << ticket.lastName << ", ";
 	os << ticket.seatNumber << ", ";
 	os << ticket.CardHeld << ", ";
 	os << ticket.classType << ", ";
-	os << ticket.specialNeeds << ", ";
-	os << ticket.military;
+    os << (ticket.specialNeeds ? "true" : "false") << ", ";
+    os << (ticket.military ? "true" : "false");
+	//os << ticket.specialNeeds << ", ";
+	//os << ticket.military;
 	os << endl;
 	return os;
-}
-
-
-
-bool planeTicket::operator <(planeTicket otherticket)
-{
-	return false;
 }
 
 string planeTicket::getSeatNumber()
@@ -40,3 +35,114 @@ string planeTicket::getClass()
 {
 	return classType;
 }
+
+//Determining priority using integer values representing the priority of a ticket method:
+
+int planeTicket::getPriority() const {
+    int priority = 0;
+
+    // Preboarding priority
+    if (specialNeeds && military) {
+        priority += 1000;
+    } else if (specialNeeds) {
+        priority += 500;
+    } else if (military) {
+        priority += 300;
+    }
+
+    // Class type priority
+    if (classType == "FirstClass") {
+        priority += 100;
+    } else if (classType == "Business") {
+        priority += 50;
+    }
+
+    // Loyalty status priority
+    if (CardHeld == "GOLD") {
+        priority += 10;
+    } else if (CardHeld == "SILVER") {
+        priority += 5;
+    }
+
+    return priority;
+}
+
+bool planeTicket::operator <(const planeTicket& otherticket) const {
+    return getPriority() < otherticket.getPriority();
+}
+
+bool planeTicket::operator >(const planeTicket& otherticket) const {
+    return getPriority() > otherticket.getPriority();
+}
+
+
+/*
+//Compare using boolean method:
+
+//Determine if the current ticket has a lower priority than the other ticket.
+bool planeTicket::operator <(const planeTicket& otherticket) const {
+    // Preboarding priority comparison
+    if ((specialNeeds && military) != (otherticket.specialNeeds && otherticket.military)) {
+        return !(specialNeeds && military);
+    }
+    if (specialNeeds != otherticket.specialNeeds) {
+        return !specialNeeds;
+    }
+    if (military != otherticket.military) {
+        return !military;
+    }
+
+    // Class type comparison
+    if (classType != otherticket.classType) {
+        if (classType == "FirstClass") return false;              //returning false indicates it does not have lower priority.
+        if (otherticket.classType == "FirstClass") return true;  //other ticket (otherticket) is FirstClass so return true.
+                                                                //This indicates that the current ticket has lower priority.
+        if (classType == "Business") return false;
+        if (otherticket.classType == "Business") return true;
+    }
+
+    // Loyalty status comparison
+    if (CardHeld != otherticket.CardHeld) {
+        if (CardHeld == "GOLD") return false;
+        if (otherticket.CardHeld == "GOLD") return true;
+        if (CardHeld == "SILVER") return false;
+        if (otherticket.CardHeld == "SILVER") return true;
+    }
+
+    // If all else is equal, return false
+    return false;
+}
+
+bool planeTicket::operator >(const planeTicket& otherticket) const {
+    // Preboarding priority comparison
+    if ((specialNeeds && military) != (otherticket.specialNeeds && otherticket.military)) {
+        return (specialNeeds && military);
+    }
+    if (specialNeeds != otherticket.specialNeeds) {
+        return specialNeeds;
+    }
+    if (military != otherticket.military) {
+        return military;
+    }
+
+    // Class type comparison
+    if (classType != otherticket.classType) {
+        if (classType == "FirstClass") return true;                     //Current Ticket returns True because it has higher priority.
+        if (otherticket.classType == "FirstClass") return false;        //returning false indicates it does not have higher priority.
+        if (classType == "Business") return true;
+        if (otherticket.classType == "Business") return false;
+    }
+
+    // Loyalty status comparison
+    if (CardHeld != otherticket.CardHeld) {
+        if (CardHeld == "GOLD") return true;
+        if (otherticket.CardHeld == "GOLD") return false;
+        if (CardHeld == "SILVER") return true;
+        if (otherticket.CardHeld == "SILVER") return false;
+    }
+
+    // If all else is equal, return false
+    return false;
+}
+
+*/

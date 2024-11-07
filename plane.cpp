@@ -1,6 +1,6 @@
 #include "plane.h"
 
-Plane::Plane() {
+Plane::Plane() :heapSize(0){
 	// fill up the values in 
 	// ignore first entry 0 because of printing
 	for (int i = 1; i < 31; i++) {
@@ -9,7 +9,8 @@ Plane::Plane() {
 			bseats[i] = "[ ]";
 			eseats[i] = "[ ]";
 		}
-		else if (13 <= i < 21) {
+		//else if (13 <= i < 21) 
+		else if(i >= 13 && i < 21){
 			bseats[i] = "[ ]";
 			eseats[i] = "[ ]";
 		}
@@ -29,6 +30,11 @@ void Plane::getTickets(){
 	int j = 0;							//keep track of boolean data
 
 	istream.open("test.txt");
+
+	if (!istream) {
+        cout << "Error opening file 'test.txt'" << endl;
+        return;
+    }
 
 	while (istream >> ticketData[i]) {	//read each string in the file
 		if(ticketData[i] == "false" ){	//check if it is one of the boolean data (true or false)
@@ -54,11 +60,16 @@ void Plane::getTickets(){
 		}
 	}
 	istream.close();
+
+	buildHeap();
+
 }
 
 void Plane::insertTicket (planeTicket ticket){
 	tickets[ticketSize] = ticket;
-	ticketSize++;
+    heapTickets[ticketSize] = ticket; // Add the ticket to the heap array
+    ticketSize++;
+    heapSize = ticketSize; // Update the size of the heap
 }
 
 void Plane::printFirstClass()
@@ -175,12 +186,13 @@ int Plane::getSeatNum(char seatChar)
 }		
 
 /*USED FOR TESTING, can be altered/deleted later*/
-void Plane::readTicket(){
+/*void Plane::readTicket(){
 	for(int i = 0; i < ticketSize; i++){
 	  	cout << tickets[i];
 		boardPlane(tickets[i]);	//grabs all tickets and boards them 
 	}
 }
+*/
 
 void Plane::boardPlane(planeTicket ticket)
 {
@@ -229,4 +241,49 @@ void Plane::boardPlane(planeTicket ticket)
 
 		eseats[ticketIdx] = "[X]";
 	}
+}
+
+
+void Plane::buildHeap() {
+    for (int index = heapSize / 2 - 1; index >= 0; index--) {
+        heapify(index, heapSize - 1);
+    }
+}
+
+void Plane::heapify(int low, int high) {
+    int largeIndex;
+    planeTicket temp = heapTickets[low]; // copy the root node of the subtree
+    largeIndex = 2 * low + 1; // index of the left child
+
+    while (largeIndex <= high) {
+        if (largeIndex < high) {
+            if (heapTickets[largeIndex] < heapTickets[largeIndex + 1]) {
+                largeIndex = largeIndex + 1; // index of the largest child
+            }
+        }
+
+        //if (temp < heapTickets[largeIndex]) { // subtree is already in a heap
+		if(temp > heapTickets[largeIndex]){
+            break;							//The condition if (temp < heapTickets[largeIndex]) should be
+        } else {							//if (temp > heapTickets[largeIndex]) to maintain the max-heap property
+            heapTickets[low] = heapTickets[largeIndex]; // move the larger child to the root
+            low = largeIndex; // go to the subtree to restore the heap
+            largeIndex = 2 * low + 1;
+        }
+    }
+
+    heapTickets[low] = temp; // insert temp into the tree, that is, list
+}
+
+planeTicket Plane::extractMax() {
+  	if (heapSize == 0) {
+        return planeTicket(); // Return a default-constructed planeTicket as a sentinel value
+    }
+
+    planeTicket maxTicket = heapTickets[0];
+    heapTickets[0] = heapTickets[heapSize - 1];
+    heapSize--;
+    heapify(0, heapSize - 1);
+
+    return maxTicket;
 }

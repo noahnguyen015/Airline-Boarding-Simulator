@@ -1,5 +1,5 @@
 #include <iostream>
-//#include <string>
+#include <string>
 #include <fstream>
 #include "planeticket.h"
 #pragma once
@@ -22,6 +22,13 @@ public:
 	void boardPlane(planeTicket ticket);
 	void readTicket();
 
+	void buildHeap();
+    void heapify(int low, int high);
+    planeTicket extractMax(); // Function to extract the highest priority passenger
+	
+	int heapSize;
+
+
 private:
 	int numSeats = 62;
 	int ticketSize = 0;
@@ -29,5 +36,7 @@ private:
 	string bseats[21];
 	string eseats[31];
 	planeTicket tickets[62];
+
+	planeTicket heapTickets[62]; // Fixed-size array to store tickets for heap operations
 };
 
