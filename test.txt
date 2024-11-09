@@ -57,7 +57,8 @@ Julio Gomez E4 NONE Economy false false
 Amy Carter A5 NONE Economy false false
 Boris Hill B5 SILVER Economy false false
 Kendall Johnson C5 NONE Economy false false
-Justin Lin D5  Economy false false
+Justin Lin D5 NONE Economy false false
 Zoro Roronoa F5 NONE Economy false false
+
 
 
