@@ -5,10 +5,11 @@ planeTicket::planeTicket(string firstName, string lastName, string seatNumber, s
 	this->firstName = firstName;
 	this->lastName = lastName;
 	this->seatNumber = seatNumber;
-	this->CardHeld = CardHeld;
+	this->cardType = CardHeld;
 	this->classType = classType;
 	this->specialNeeds = specialNeeds;
 	this->military = military;
+    this->priority = 0;
 }
 
 //overloader to check ticket data
@@ -16,7 +17,7 @@ planeTicket::planeTicket(string firstName, string lastName, string seatNumber, s
 ostream& operator<<(ostream &os, planeTicket& ticket){
 	os << ticket.firstName << " " << ticket.lastName << ", ";
 	os << ticket.seatNumber << ", ";
-	os << ticket.CardHeld << ", ";
+	os << ticket.cardType << ", ";
 	os << ticket.classType << ", ";
     os << (ticket.specialNeeds ? "true" : "false") << ", ";
     os << (ticket.military ? "true" : "false");
@@ -38,18 +39,33 @@ string planeTicket::getClass()
 
 //Determining priority using integer values representing the priority of a ticket method:
 
-int planeTicket::getPriority() const {
+int planeTicket::getPriority() const{
+
     int priority = 0;
 
     // Preboarding priority
-    if (specialNeeds && military) {
-        priority += 1000;
-    } else if (specialNeeds) {
-        priority += 500;
-    } else if (military) {
-        priority += 300;
+    if (specialNeeds || military || (classType == "FirstClass" && cardType == "ELITE"))
+        priority = 10;
+
+    //Boarding Group 1
+    else if (cardType == "ELITE" || classType == "FirstClass")
+        priority = 8;
+    //Boarding Group 2
+    else if (classType == "Business" || cardType == "GOLD")
+        priority = 6;
+    //Boarding Group 3
+    else if (classType == "Economy" && cardType == "SILVER")
+        priority = 4;
+    //Boarding Group 4 & 5
+    else {
+        if (seatNumber[1] == '1' || seatNumber[1] == '2'){
+            priority = 2;
+        }
+        else
+            priority = 0;
     }
 
+    /*
     // Class type priority
     if (classType == "FirstClass") {
         priority += 100;
@@ -58,20 +74,21 @@ int planeTicket::getPriority() const {
     }
 
     // Loyalty status priority
-    if (CardHeld == "GOLD") {
+    if (cardStatus == "GOLD") {
         priority += 10;
-    } else if (CardHeld == "SILVER") {
+    } else if (cardStatus == "SILVER") {
         priority += 5;
-    }
-
-    return priority;
+    } */
+   return priority;
 }
 
-bool planeTicket::operator <(const planeTicket& otherticket) const {
+bool planeTicket::operator <(const planeTicket& otherticket) const{
+
     return getPriority() < otherticket.getPriority();
 }
 
-bool planeTicket::operator >(const planeTicket& otherticket) const {
+bool planeTicket::operator >(const planeTicket& otherticket) const{
+
     return getPriority() > otherticket.getPriority();
 }
 

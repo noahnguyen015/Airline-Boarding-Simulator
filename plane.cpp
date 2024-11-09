@@ -52,11 +52,11 @@ void Plane::getTickets(){
 
 		i++;
 
-		if(i == 7){						//once big enough (meaning 5 elements are read, make a ticket)
+		if(i == 7){						//once big enough (meaning 7 elements are read, make a ticket)
 			//generate a ticket
 			planeTicket ticket(ticketData[0], ticketData[1], ticketData[2], ticketData[3], ticketData[4], specialData[0], specialData[1]);
 			insertTicket(ticket);		//put ticket into array tickets 
-			i = 0;						//reset to read 5 more elements
+			i = 0;						//reset to read 7 more elements
 		}
 	}
 	istream.close();

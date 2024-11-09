@@ -13,20 +13,20 @@ public:
 
 	friend ostream& operator <<(ostream &os, planeTicket& ticket);
 
-	bool operator < (const planeTicket& otherticket) const;
+	bool operator < ( const planeTicket& otherticket) const;
 	bool operator > (const planeTicket& otherticket) const;
 	string getSeatNumber();
 	string getClass();
-
-private:
 	int getPriority() const; // Function to get the priority value of a ticket
 
+private:
 	string firstName = "";
 	string lastName = "";
 	string seatNumber = "";
-	string CardHeld = "";
+	string cardType = "";
 	string classType = "";
 	bool specialNeeds = false;
 	bool military = false;
+	int priority;
 };
 

@@ -31,18 +31,22 @@ int main() {
 
 
    //Extract and board the highest priority passenger. This will show entire list of boarding passengers and one completed map.
+    
+    //while(plane.heapSize > 0){
 
-   while (plane.heapSize > 0) {
-        planeTicket highestPriorityTicket = plane.extractMax();
+    planeTicket highestPriorityTicket = plane.extractMax();
+    cout <<"PREBOARDING: " << endl;
+    while(highestPriorityTicket.getPriority() == 10){
         cout << "Boarding passenger: " << highestPriorityTicket;
         plane.boardPlane(highestPriorityTicket);
+        highestPriorityTicket = plane.extractMax();
     }
+ //   }
 
     cout << "All passengers have been boarded." << endl;
 
     cout << "Final seating arrangement:" << endl;
     plane.printPlane();
-
 
     return 0;
 }
