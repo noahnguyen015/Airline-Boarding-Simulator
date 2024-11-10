@@ -25,6 +25,7 @@ public:
 	void buildHeap();
     void heapify(int low, int high);
     planeTicket extractMax(); // Function to extract the highest priority passenger
+	void announcePassengers();
 	
 	int heapSize;
 

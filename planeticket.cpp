@@ -16,7 +16,7 @@ planeTicket::planeTicket(string firstName, string lastName, string seatNumber, s
 //TO_DO: change boolean data to show false and true instead of 0 and 1
 ostream& operator<<(ostream &os, planeTicket& ticket){
 	os << ticket.firstName << " " << ticket.lastName << ", ";
-	os << ticket.seatNumber << ", ";
+	os << ticket.seatNumber << " ";
 	os << ticket.cardType << ", ";
 	os << ticket.classType << ", ";
     os << (ticket.specialNeeds ? "true" : "false") << ", ";
@@ -27,12 +27,12 @@ ostream& operator<<(ostream &os, planeTicket& ticket){
 	return os;
 }
 
-string planeTicket::getSeatNumber()
+string planeTicket::getSeatNumber() const
 {
 	return seatNumber;
 }
 
-string planeTicket::getClass()
+string planeTicket::getClass() const
 {
 	return classType;
 }

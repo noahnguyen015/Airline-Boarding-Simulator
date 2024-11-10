@@ -14,6 +14,8 @@ int main() {
 	cout << "Initial seating arrangement:" << endl;
     plane.printPlane();
 
+    plane.announcePassengers();
+
 	/*
 	// Extract and board the highest priority passenger one at a time. This will show who is boarding and the plane map gets updated each time.
     while (plane.heapSize > 0) {
@@ -34,16 +36,7 @@ int main() {
     
     //while(plane.heapSize > 0){
 
-    planeTicket highestPriorityTicket = plane.extractMax();
-    cout <<"PREBOARDING: " << endl;
-    while(highestPriorityTicket.getPriority() == 10){
-        cout << "Boarding passenger: " << highestPriorityTicket;
-        plane.boardPlane(highestPriorityTicket);
-        highestPriorityTicket = plane.extractMax();
-    }
  //   }
-
-    cout << "All passengers have been boarded." << endl;
 
     cout << "Final seating arrangement:" << endl;
     plane.printPlane();
