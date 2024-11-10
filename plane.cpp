@@ -1,4 +1,7 @@
 #include "plane.h"
+#include <chrono>
+#include <thread>
+
 
 Plane::Plane() :heapSize(0){
 	// fill up the values in 
@@ -52,11 +55,11 @@ void Plane::getTickets(){
 
 		i++;
 
-		if(i == 7){						//once big enough (meaning 5 elements are read, make a ticket)
+		if(i == 7){						//once big enough (meaning 7 elements are read, make a ticket)
 			//generate a ticket
 			planeTicket ticket(ticketData[0], ticketData[1], ticketData[2], ticketData[3], ticketData[4], specialData[0], specialData[1]);
 			insertTicket(ticket);		//put ticket into array tickets 
-			i = 0;						//reset to read 5 more elements
+			i = 0;						//reset to read 7 more elements
 		}
 	}
 	istream.close();
@@ -243,7 +246,6 @@ void Plane::boardPlane(planeTicket ticket)
 	}
 }
 
-
 void Plane::buildHeap() {
     for (int index = heapSize / 2 - 1; index >= 0; index--) {
         heapify(index, heapSize - 1);
@@ -277,7 +279,7 @@ void Plane::heapify(int low, int high) {
 
 planeTicket Plane::extractMax() {
   	if (heapSize == 0) {
-        return planeTicket(); // Return a default-constructed planeTicket as a sentinel value
+        // return planeTicket(); // Return a default-constructed planeTicket as a sentinel value
     }
 
     planeTicket maxTicket = heapTickets[0];
@@ -286,4 +288,76 @@ planeTicket Plane::extractMax() {
     heapify(0, heapSize - 1);
 
     return maxTicket;
+}
+
+void Plane::announcePassengers(){
+	cout << "Hello passengers. We are now boarding and will be naming passengers for our flight." << endl; // BOARDING STARTS
+	cout << "Please have your plane ticket and identification ready." << endl;
+	this_thread::sleep_for(chrono::seconds(4));
+	planeTicket highestPriorityTicket = extractMax(); //takes highest priority 
+
+    cout <<"PREBOARDING: " << endl; //for military + special needs, military, special needs, and first class + elite passengers
+	this_thread::sleep_for(chrono::seconds(2)); 
+    while(highestPriorityTicket.getPriority() == 10){
+        cout << "Boarding passenger: " << highestPriorityTicket;
+        boardPlane(highestPriorityTicket);
+		this_thread::sleep_for(chrono::seconds(1)); //1 second delay
+        highestPriorityTicket = extractMax(); //gets next ticket for highest priority
+    }
+
+	printPlane(); //prints plane with preboarded passengers
+
+	cout <<"BOARDING PASSENGERS IN GROUP 1: " << endl;  //first class and elite passengers
+	this_thread::sleep_for(chrono::seconds(2)); 
+    while(highestPriorityTicket.getPriority() == 8){
+        cout << "Boarding passenger: " << highestPriorityTicket;
+        boardPlane(highestPriorityTicket);
+		this_thread::sleep_for(chrono::seconds(1));
+        highestPriorityTicket = extractMax(); //gets next ticket for highest priority
+    }
+
+	printPlane(); //prints plane with group 1 passengers
+
+	cout <<"BOARDING PASSENGERS IN GROUP 2: " << endl; //business and gold passengers
+	this_thread::sleep_for(chrono::seconds(2)); 
+    while(highestPriorityTicket.getPriority() == 6){
+        cout << "Boarding passenger: " << highestPriorityTicket;
+        boardPlane(highestPriorityTicket);
+		this_thread::sleep_for(chrono::seconds(1));
+        highestPriorityTicket = extractMax();
+    }
+
+	printPlane(); //prints plane with group 2 passengers
+
+	cout <<"BOARDING PASSENGERS IN GROUP 3: " << endl; //economy and silver passengers
+	this_thread::sleep_for(chrono::seconds(2)); 
+    while(highestPriorityTicket.getPriority() == 4){
+        cout << "Boarding passenger: " << highestPriorityTicket;
+        boardPlane(highestPriorityTicket);
+		this_thread::sleep_for(chrono::seconds(1));
+        highestPriorityTicket = extractMax();
+    }
+
+	printPlane(); //prints plane with group 3 passengers
+
+	cout <<"BOARDING PASSENGERS IN GROUP 4: " << endl; //everyone else
+	this_thread::sleep_for(chrono::seconds(2)); 
+    while(highestPriorityTicket.getPriority() == 2){
+        cout << "Boarding passenger: " << highestPriorityTicket;
+        boardPlane(highestPriorityTicket);
+		this_thread::sleep_for(chrono::seconds(1));
+        highestPriorityTicket = extractMax();
+    }
+	printPlane(); //prints plane with group 4 passengers
+
+	cout <<"BOARDING PASSENGERS IN GROUP 5: " << endl; //everyone else
+	this_thread::sleep_for(chrono::seconds(2)); 
+    while(highestPriorityTicket.getPriority() == 0 || heapSize >= 0){
+        cout << "Boarding passenger: " << highestPriorityTicket;
+        boardPlane(highestPriorityTicket);
+		this_thread::sleep_for(chrono::seconds(1));
+        highestPriorityTicket = extractMax();
+    }
+
+	cout << "All passengers have been boarded." << endl;
 }
