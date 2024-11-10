@@ -15,8 +15,8 @@ public:
 
 	bool operator < ( const planeTicket& otherticket) const;
 	bool operator > (const planeTicket& otherticket) const;
-	string getSeatNumber() const;
-	string getClass() const;
+	string getSeatNumber();
+	string getClass();
 	int getPriority() const; // Function to get the priority value of a ticket
 
 private:
@@ -29,4 +29,3 @@ private:
 	bool military = false;
 	int priority;
 };
-

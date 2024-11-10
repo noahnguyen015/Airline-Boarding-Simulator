@@ -27,12 +27,12 @@ ostream& operator<<(ostream &os, planeTicket& ticket){
 	return os;
 }
 
-string planeTicket::getSeatNumber() const
+string planeTicket::getSeatNumber()
 {
 	return seatNumber;
 }
 
-string planeTicket::getClass() const
+string planeTicket::getClass()
 {
 	return classType;
 }
