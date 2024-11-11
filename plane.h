@@ -10,29 +10,32 @@ class Plane : public planeTicket {
 public:
 
 	Plane();
-	void getTickets();
+	void simulateSeating();
+
+private:
+
+	void getTickets(string filename);
 	void insertTicket(planeTicket ticket);
+
+
+	int getSeatNum(char seatChar);
+	void boardPlane(planeTicket ticket);
 
 	void printFirstClass();
 	void printBusiness();
 	void printCabin();
 	void printPlane();
-
-	int getSeatNum(char seatChar);
-	void boardPlane(planeTicket ticket);
-	void readTicket();
+	void takeoff(); 	//ascii art
 
 	void buildHeap();
     void heapify(int low, int high);
     planeTicket extractMax(); // Function to extract the highest priority passenger
 	void announcePassengers();
-	
+
 	int heapSize;
-
-
-private:
 	int numSeats = 62;
 	int ticketSize = 0;
+	int numPassengers;
 	string fseats[13];
 	string bseats[21];
 	string eseats[31];

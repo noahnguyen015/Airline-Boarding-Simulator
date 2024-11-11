@@ -1,6 +1,7 @@
 #include "plane.h"
 #include <chrono>
 #include <thread>
+#include <algorithm>
 
 
 Plane::Plane() :heapSize(0){
@@ -21,9 +22,11 @@ Plane::Plane() :heapSize(0){
 			eseats[i] = "[ ]";
 		}
 	}
+
+	numPassengers = 0;
 }
 
-void Plane::getTickets(){
+void Plane::getTickets(string filename){
 	string ticketData[7];				//ticketData holds the string data of the ticket/ keeps track of index, elements in a ticket		
 	bool specialData[2];				//use to hold if the person has special needs
 
@@ -32,7 +35,7 @@ void Plane::getTickets(){
 	int i = 0;							//keep track of string data
 	int j = 0;							//keep track of boolean data
 
-	istream.open("test.txt");
+	istream.open(filename);
 
 	if (!istream) {
         cout << "Error opening file 'test.txt'" << endl;
@@ -40,6 +43,7 @@ void Plane::getTickets(){
     }
 
 	while (istream >> ticketData[i]) {	//read each string in the file
+
 		if(ticketData[i] == "false" ){	//check if it is one of the boolean data (true or false)
 			if(j == 2) 					//if more than 2 (means you already recorded 2 elements)
 				j = 0; 					//reset to 0
@@ -59,6 +63,7 @@ void Plane::getTickets(){
 			//generate a ticket
 			planeTicket ticket(ticketData[0], ticketData[1], ticketData[2], ticketData[3], ticketData[4], specialData[0], specialData[1]);
 			insertTicket(ticket);		//put ticket into array tickets 
+			numPassengers++;
 			i = 0;						//reset to read 7 more elements
 		}
 	}
@@ -75,8 +80,8 @@ void Plane::insertTicket (planeTicket ticket){
     heapSize = ticketSize; // Update the size of the heap
 }
 
-void Plane::printFirstClass()
-{
+void Plane::printFirstClass(){
+
 	cout << "\t" << "|----------First Class----------|" << endl;
 
 	//list the rows for visual help
@@ -103,8 +108,7 @@ void Plane::printFirstClass()
 	cout << "\t" << "|" << "---------Business Class--------" << "|" << endl;
 }
 
-void Plane::printBusiness()
-{
+void Plane::printBusiness(){
 
 	//list the rows for visual help
 	cout << "\t|\tA" << "   B" << "\t    C" << "   D" << "       |" << endl;
@@ -130,8 +134,8 @@ void Plane::printBusiness()
 	cout << "\t" << "|" << "---------Economy Class---------" << "|" << endl;
 }
 
-void Plane::printCabin()
-{
+void Plane::printCabin(){
+
 	cout << "\t|   A" << "   B" <<"   C" << "\t    D" << "   E" << "   F" << "   |" << endl;
 
 	for (int i = 1; i < 31; i++) {
@@ -156,11 +160,64 @@ void Plane::printCabin()
 }
 
 void Plane::printPlane() {
+
 	printFirstClass();
 	printBusiness();
 	printCabin();
 
 	cout << endl;
+}
+
+void Plane::takeoff()
+{
+	this_thread::sleep_for(chrono::seconds(1));
+	cout <<"                      ___" << endl;
+	cout <<"                      \\\\ \\" << endl;
+	cout <<"                       \\\\ `\\" << endl;
+	cout <<"    ___                 \\\\  \\" << endl; 
+	cout <<"   |    \\                \\\\  `\\" << endl;
+	cout <<"   |_____\\                \\    \\" << endl;
+	cout <<"   |______\\                \\    `\\" << endl;
+	cout <<"   |       \\                \\     \\" << endl;
+	cout <<"   |      __\\__---------------------------------._." << endl;
+	cout <<" __|---~~~__o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_[][\\__" << endl;
+	cout <<"|___                         /~      )                \\__" << endl;
+	cout <<"    ~~~---..._______________/      ,/_________________/" << endl;
+	cout <<"                           /      /" << endl;
+	cout <<"                          /     ,/" << endl;
+	cout <<"                         /     /" << endl;
+	cout <<"                        /    ,/" << endl;
+	cout <<"                       /    /" << endl;
+	cout <<"                      //  ,/" << endl;
+	cout <<"                     //  /" << endl;
+	cout <<"                    // ,/" << endl;
+	cout <<"                   //_/" << endl;
+	cout << endl;
+	cout <<"HAVE A NICE FLIGHT! " << endl << "Number of Passengers: " << numPassengers << endl;
+
+/*
+                      ___
+                      \\ \
+                       \\ `\
+    ___                 \\  \
+   |    \                \\  `\
+   |_____\                \    \
+   |______\                \    `\
+   |       \                \     \
+   |      __\__---------------------------------._.
+ __|---~~~__o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_o_[][\__
+|___                         /~      )                \__
+    ~~~---..._______________/      ,/_________________/
+                           /      /
+                          /     ,/
+                         /     /
+                        /    ,/
+                       /    /
+                      //  ,/
+                     //  /
+                    // ,/
+                   //_/
+*/
 }
 
 int Plane::getSeatNum(char seatChar)
@@ -187,15 +244,6 @@ int Plane::getSeatNum(char seatChar)
 	else
 		return 0;
 }		
-
-/*USED FOR TESTING, can be altered/deleted later*/
-/*void Plane::readTicket(){
-	for(int i = 0; i < ticketSize; i++){
-	  	cout << tickets[i];
-		boardPlane(tickets[i]);	//grabs all tickets and boards them 
-	}
-}
-*/
 
 void Plane::boardPlane(planeTicket ticket)
 {
@@ -279,7 +327,7 @@ void Plane::heapify(int low, int high) {
 
 planeTicket Plane::extractMax() {
   	if (heapSize == 0) {
-        // return planeTicket(); // Return a default-constructed planeTicket as a sentinel value
+        //return planeTicket(); // Return a default-constructed planeTicket as a sentinel value
     }
 
     planeTicket maxTicket = heapTickets[0];
@@ -305,8 +353,6 @@ void Plane::announcePassengers(){
         highestPriorityTicket = extractMax(); //gets next ticket for highest priority
     }
 
-	printPlane(); //prints plane with preboarded passengers
-
 	cout <<"BOARDING PASSENGERS IN GROUP 1: " << endl;  //first class and elite passengers
 	this_thread::sleep_for(chrono::seconds(2)); 
     while(highestPriorityTicket.getPriority() == 8){
@@ -315,8 +361,6 @@ void Plane::announcePassengers(){
 		this_thread::sleep_for(chrono::seconds(1));
         highestPriorityTicket = extractMax(); //gets next ticket for highest priority
     }
-
-	printPlane(); //prints plane with group 1 passengers
 
 	cout <<"BOARDING PASSENGERS IN GROUP 2: " << endl; //business and gold passengers
 	this_thread::sleep_for(chrono::seconds(2)); 
@@ -327,8 +371,6 @@ void Plane::announcePassengers(){
         highestPriorityTicket = extractMax();
     }
 
-	printPlane(); //prints plane with group 2 passengers
-
 	cout <<"BOARDING PASSENGERS IN GROUP 3: " << endl; //economy and silver passengers
 	this_thread::sleep_for(chrono::seconds(2)); 
     while(highestPriorityTicket.getPriority() == 4){
@@ -338,9 +380,7 @@ void Plane::announcePassengers(){
         highestPriorityTicket = extractMax();
     }
 
-	printPlane(); //prints plane with group 3 passengers
-
-	cout <<"BOARDING PASSENGERS IN GROUP 4: " << endl; //everyone else
+	cout <<"BOARDING PASSENGERS IN GROUP 4: " << endl; //ECONOMY IN SEAT ROWS 1-5
 	this_thread::sleep_for(chrono::seconds(2)); 
     while(highestPriorityTicket.getPriority() == 2){
         cout << "Boarding passenger: " << highestPriorityTicket;
@@ -348,11 +388,9 @@ void Plane::announcePassengers(){
 		this_thread::sleep_for(chrono::seconds(1));
         highestPriorityTicket = extractMax();
     }
-	printPlane(); //prints plane with group 4 passengers
 
 	cout <<"BOARDING PASSENGERS IN GROUP 5: " << endl; //everyone else
-	this_thread::sleep_for(chrono::seconds(2)); 
-    while(highestPriorityTicket.getPriority() == 0 || heapSize >= 0){
+	while(highestPriorityTicket.getPriority() == 0 && heapSize >= 0){
         cout << "Boarding passenger: " << highestPriorityTicket;
         boardPlane(highestPriorityTicket);
 		this_thread::sleep_for(chrono::seconds(1));
@@ -360,4 +398,19 @@ void Plane::announcePassengers(){
     }
 
 	cout << "All passengers have been boarded." << endl;
+}
+
+void Plane::simulateSeating(){
+
+	getTickets("test.txt");
+
+	cout << "Initial seating arrangement:" << endl;
+    printPlane();
+
+    announcePassengers();
+
+    cout << "Final seating arrangement:" << endl;
+    printPlane();
+
+	takeoff();
 }
