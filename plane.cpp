@@ -104,11 +104,12 @@ void Plane::printFirstClass(){
 				cout << "    ";
 		}
 	}
-	//line break between classes
-	cout << "\t" << "|" << "---------Business Class--------" << "|" << endl;
 }
 
 void Plane::printBusiness(){
+
+	//line break between classes
+	cout << "\t" << "|" << "---------Business Class--------" << "|" << endl;
 
 	//list the rows for visual help
 	cout << "\t|\tA" << "   B" << "\t    C" << "   D" << "       |" << endl;
@@ -130,11 +131,12 @@ void Plane::printBusiness(){
 		}
 	}
 
-	//line break between classes
-	cout << "\t" << "|" << "---------Economy Class---------" << "|" << endl;
 }
 
 void Plane::printCabin(){
+
+	//line break between classes
+	cout << "\t" << "|" << "---------Economy Class---------" << "|" << endl;
 
 	cout << "\t|   A" << "   B" <<"   C" << "\t    D" << "   E" << "   F" << "   |" << endl;
 
