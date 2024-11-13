@@ -404,7 +404,7 @@ void Plane::announcePassengers(){
 
 void Plane::simulateSeating(){
 
-	getTickets("test3.txt");
+	getTickets("test2.txt");
 
 	cout << "Initial seating arrangement:" << endl;
     printPlane();
