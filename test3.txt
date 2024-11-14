@@ -28,3 +28,7 @@ Sophia AI E1 NONE Economy true false
 Kuon Ichinose D1 GOLD Economy false false 
 Zenkichi Hasegawa C2 GOLD Business false false 
 Akane Hasegawa D2 SILVER Business false false 
+Yu Narukami B1 SILVER FirstClass false false 
+Yosuke Hanamara C1 SILVER FirstClass 
+Chie Satonaka D1 SILVER FirstClass 
+Yukiko Amagi A2 SILVER FirstClass 
