@@ -28,9 +28,3 @@ Nico Robin C5 NONE Economy false false
 Tony Tony D5 NONE Economy false false
 Vinsmoke Sanji E5 NONE Economy false false
 Trafalgar Law F5 NONE Economy false false
-Nefertari Vivi A6 NONE Economy false false
-Kozuki Momonosuke B6 NONE Economy false false
-Eustass Kid C6 NONE Economy false false
-Portgaz Ace D6 NONE Economy false false
-Basil Hawkins E6 NONE Economy false false
-X Drake F6 NONE Economy false false

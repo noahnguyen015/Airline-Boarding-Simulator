@@ -195,6 +195,9 @@ void Plane::takeoff()
 	cout <<"                    // ,/" << endl;
 	cout <<"                   //_/" << endl;
 	cout << endl;
+	if (numPassengers == 62){
+		cout << "All seats have been filled." << endl;
+	}
 	cout <<"HAVE A NICE FLIGHT! " << endl << "Number of Passengers: " << numPassengers << endl;
 
 /*
@@ -404,7 +407,7 @@ void Plane::announcePassengers(){
 
 void Plane::simulateSeating(){
 
-	getTickets("test2.txt");
+	getTickets("test3.txt");
 
 	cout << "Initial seating arrangement:" << endl;
     printPlane();
