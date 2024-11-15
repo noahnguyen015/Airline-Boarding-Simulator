@@ -10,7 +10,7 @@ class Plane : public planeTicket {
 public:
 
 	Plane();
-	void simulateSeating();
+	void simulateSeating(string filename);
 
 private:
 

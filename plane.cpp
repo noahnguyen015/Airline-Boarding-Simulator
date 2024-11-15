@@ -63,7 +63,6 @@ void Plane::getTickets(string filename){
 			//generate a ticket
 			planeTicket ticket(ticketData[0], ticketData[1], ticketData[2], ticketData[3], ticketData[4], specialData[0], specialData[1]);
 			insertTicket(ticket);		//put ticket into array tickets 
-			numPassengers++;
 			i = 0;						//reset to read 7 more elements
 		}
 	}
@@ -259,12 +258,12 @@ void Plane::boardPlane(planeTicket ticket)
 
 	string ticketClass = ticket.getClass();
 
-	rowNum = getSeatNum(seatLetter[1]) - 1;
+	rowNum = getSeatNum(seatLetter[1]) - 1; //-1 the result for the multiplier, (used for when it is first row don't multiply anything)
 
 	if (ticketClass == "FirstClass" || ticketClass == "Business") {
 
 		if (seatLetter[0] == 'A') 
-			//calculates which row it will be on
+			//calculates which row it will be on (A is every 1st seat in the row, B is the every 2nd row etc..)
 			ticketIdx = 1 + (rowNum * 4);
 		else if (seatLetter[0] == 'B') 
 			ticketIdx = 2 + (rowNum * 4);
@@ -272,11 +271,54 @@ void Plane::boardPlane(planeTicket ticket)
 			ticketIdx = 3 + (rowNum * 4);
 		else if (seatLetter[0] == 'D') 
 			ticketIdx = 4 + (rowNum * 4);
+		else{
+			cout <<"INVALID SEAT " << seatLetter[0] << seatLetter[1] << ". TICKET TOSSED" << endl;
+			return;
+		}
 
-		//determine if the section is first class or business class
-		(ticketClass == "FirstClass") ? fseats[ticketIdx] = "[X]" : bseats[ticketIdx] = "[X]";
+		//determine if the section is first class & if the seat is taken or correct
+		if(ticketClass == "FirstClass"){	
+
+			if(rowNum+1 > 4 || rowNum+1 == 0){
+			cout <<"INVALID SEAT " << seatLetter[0] << seatLetter[1] << ". TICKET TOSSED" << endl;
+			return;
+			}
+
+			if(fseats[ticketIdx] == "[X]"){
+				cout << "SEAT ALREADY TAKEN. TICKET AT " << seatLetter[0] << seatLetter[1] << endl;
+				return;
+			}
+			else{
+				numPassengers++;
+				fseats[ticketIdx] = "[X]";
+			}
+		}
+
+		//determine if the section is business class & if the seat is taken or correct
+		if(ticketClass == "Business"){
+
+			if(rowNum+1 > 5 || rowNum+1 == 0){
+			cout <<"INVALID SEAT " << seatLetter[0] << seatLetter[1] << ". TICKET TOSSED" << endl;
+			return;
+			}
+
+			if(bseats[ticketIdx] == "[X]"){
+				cout << "SEAT ALREADY TAKEN. TICKET AT " << seatLetter[0] << seatLetter[1] << endl;
+				return;
+			}
+			else{
+				numPassengers++;
+				bseats[ticketIdx] = "[X]";
+			}
+		}
 	}
 	else {
+
+		if(rowNum+1 > 5 || rowNum+1 == 0){
+			cout <<"INVALID SEAT " << seatLetter[0] << seatLetter[1] << ". TICKET TOSSED" << endl;
+			return;
+		}
+
 		//economy seats
 		if (seatLetter[0] == 'A')
 			ticketIdx = 1 + (rowNum * 6);
@@ -288,11 +330,21 @@ void Plane::boardPlane(planeTicket ticket)
 			ticketIdx = 4 + (rowNum * 6);
 		else if (seatLetter[0] == 'E')
 			ticketIdx = 5 + (rowNum * 6);
-		else if (seatLetter[0] == 'F'){
+		else if (seatLetter[0] == 'F')
 			ticketIdx = 6 + (rowNum * 6);
+		else {
+			cout <<"INVALID SEAT " << seatLetter[0] << seatLetter[1] << ". TICKET TOSSED" << endl;
+			return;
 		}
 
-		eseats[ticketIdx] = "[X]";
+		//determine if the seat is taken
+		if(eseats[ticketIdx] == "[X]"){
+			cout << "SEAT ALREADY TAKEN. TICKET AT " << seatLetter[0] << seatLetter[1] << endl;
+			return;
+		}
+		else
+			numPassengers++;
+			eseats[ticketIdx] = "[X]";
 	}
 }
 
@@ -328,9 +380,6 @@ void Plane::heapify(int low, int high) {
 }
 
 planeTicket Plane::extractMax() {
-  	if (heapSize == 0) {
-        //return planeTicket(); // Return a default-constructed planeTicket as a sentinel value
-    }
 
     planeTicket maxTicket = heapTickets[0];
     heapTickets[0] = heapTickets[heapSize - 1];
@@ -346,73 +395,116 @@ void Plane::announcePassengers(){
 	this_thread::sleep_for(chrono::seconds(4));
 	planeTicket highestPriorityTicket = extractMax(); //takes highest priority 
 
-    cout <<"PREBOARDING: " << endl; //for military + special needs, military, special needs, and first class + elite passengers
-	this_thread::sleep_for(chrono::seconds(2)); 
-    while(highestPriorityTicket.getPriority() == 10){
-        cout << "Boarding passenger: " << highestPriorityTicket;
-        boardPlane(highestPriorityTicket);
-		this_thread::sleep_for(chrono::seconds(1)); //1 second delay
-        highestPriorityTicket = extractMax(); //gets next ticket for highest priority
-    }
-
-	cout <<"BOARDING PASSENGERS IN GROUP 1: " << endl;  //first class and elite passengers
-	this_thread::sleep_for(chrono::seconds(2)); 
-    while(highestPriorityTicket.getPriority() == 8){
-        cout << "Boarding passenger: " << highestPriorityTicket;
-        boardPlane(highestPriorityTicket);
+	if(highestPriorityTicket.getPriority() == 10){
+		cout <<"PREBOARDING: " << endl; //for military + special needs, military, special needs, and first class + elite passengers
+		this_thread::sleep_for(chrono::seconds(2)); 
+		while(highestPriorityTicket.getPriority() == 10 && heapSize >= 0){
+			cout << "Boarding passenger: " << highestPriorityTicket;
+			boardPlane(highestPriorityTicket);
+			this_thread::sleep_for(chrono::seconds(1)); //1 second delay
+			highestPriorityTicket = extractMax(); //gets next ticket for highest priority
+		}
+	}else {
 		this_thread::sleep_for(chrono::seconds(1));
-        highestPriorityTicket = extractMax(); //gets next ticket for highest priority
-    }
+		cout <<"NO PASSENGERS IN PRE-BOARDING" << endl;
+	}
 
-	cout <<"BOARDING PASSENGERS IN GROUP 2: " << endl; //business and gold passengers
-	this_thread::sleep_for(chrono::seconds(2)); 
-    while(highestPriorityTicket.getPriority() == 6){
-        cout << "Boarding passenger: " << highestPriorityTicket;
-        boardPlane(highestPriorityTicket);
+	if(highestPriorityTicket.getPriority() == 8){
+		cout <<"BOARDING PASSENGERS IN GROUP 1: " << endl;  //first class and elite passengers
+		this_thread::sleep_for(chrono::seconds(2)); 
+		while(highestPriorityTicket.getPriority() == 8 && heapSize >= 0){
+			cout << "Boarding passenger: " << highestPriorityTicket;
+			boardPlane(highestPriorityTicket);
+			this_thread::sleep_for(chrono::seconds(1));
+			highestPriorityTicket = extractMax(); //gets next ticket for highest priority
+		}
+	}else {
 		this_thread::sleep_for(chrono::seconds(1));
-        highestPriorityTicket = extractMax();
-    }
+		cout <<"NO PASSENGERS IN GROUP 1" << endl;
+	}
 
-	cout <<"BOARDING PASSENGERS IN GROUP 3: " << endl; //economy and silver passengers
-	this_thread::sleep_for(chrono::seconds(2)); 
-    while(highestPriorityTicket.getPriority() == 4){
-        cout << "Boarding passenger: " << highestPriorityTicket;
-        boardPlane(highestPriorityTicket);
+	if(highestPriorityTicket.getPriority() == 6){
+		cout <<"BOARDING PASSENGERS IN GROUP 2: " << endl; //business and gold passengers
+		this_thread::sleep_for(chrono::seconds(2)); 
+		while(highestPriorityTicket.getPriority() == 6 && heapSize >= 0){
+			cout << "Boarding passenger: " << highestPriorityTicket;
+			boardPlane(highestPriorityTicket);
+			this_thread::sleep_for(chrono::seconds(1));
+			highestPriorityTicket = extractMax();
+		}
+	}else {
 		this_thread::sleep_for(chrono::seconds(1));
-        highestPriorityTicket = extractMax();
-    }
+		cout <<"NO PASSENGERS IN GROUP 2" << endl;
+	}
 
-	cout <<"BOARDING PASSENGERS IN GROUP 4: " << endl; //ECONOMY IN SEAT ROWS 1-5
-	this_thread::sleep_for(chrono::seconds(2)); 
-    while(highestPriorityTicket.getPriority() == 2){
-        cout << "Boarding passenger: " << highestPriorityTicket;
-        boardPlane(highestPriorityTicket);
+	if(highestPriorityTicket.getPriority() == 4){
+		cout <<"BOARDING PASSENGERS IN GROUP 3: " << endl; //economy and silver passengers
+		this_thread::sleep_for(chrono::seconds(2)); 
+		while(highestPriorityTicket.getPriority() == 4 && heapSize >= 0){
+			cout << "Boarding passenger: " << highestPriorityTicket;
+			boardPlane(highestPriorityTicket);
+			this_thread::sleep_for(chrono::seconds(1));
+			highestPriorityTicket = extractMax();
+		}
+	}else {
 		this_thread::sleep_for(chrono::seconds(1));
-        highestPriorityTicket = extractMax();
-    }
+		cout <<"NO PASSENGERS IN GROUP 3" << endl;
+	}
 
-	cout <<"BOARDING PASSENGERS IN GROUP 5: " << endl; //everyone else
-	while(highestPriorityTicket.getPriority() == 0 && heapSize >= 0){
-        cout << "Boarding passenger: " << highestPriorityTicket;
-        boardPlane(highestPriorityTicket);
+	if(highestPriorityTicket.getPriority() == 2){
+		cout <<"BOARDING PASSENGERS IN GROUP 4: " << endl; //ECONOMY IN SEAT ROWS 1-5
+		this_thread::sleep_for(chrono::seconds(2)); 
+		while(highestPriorityTicket.getPriority() == 2 && heapSize >= 0){
+			cout << "Boarding passenger: " << highestPriorityTicket;
+			boardPlane(highestPriorityTicket);
+			this_thread::sleep_for(chrono::seconds(1));
+			highestPriorityTicket = extractMax();
+    }
+	}else {
 		this_thread::sleep_for(chrono::seconds(1));
-        highestPriorityTicket = extractMax();
-    }
+		cout <<"NO PASSENGERS IN GROUP 4" << endl;
+	}
 
-	cout << "All passengers have been boarded." << endl;
+	if(highestPriorityTicket.getPriority() == 0){
+		cout <<"BOARDING PASSENGERS IN GROUP 5: " << endl; //everyone else
+		while(highestPriorityTicket.getPriority() == 0 && heapSize >= 0){
+			cout << "Boarding passenger: " << highestPriorityTicket;
+			boardPlane(highestPriorityTicket);
+			this_thread::sleep_for(chrono::seconds(1));
+			highestPriorityTicket = extractMax();
+		}
+	}else {
+		this_thread::sleep_for(chrono::seconds(1));
+		cout <<"NO PASSENGERS IN GROUP 5" << endl;
+	}
 }
 
-void Plane::simulateSeating(){
+void Plane::simulateSeating(string filename){
 
-	getTickets("test.txt");
+	//grab the tickets from the file
+	getTickets(filename);
 
+	//if no tickets are found, exit the program
+	if(ticketSize == 0){
+		this_thread::sleep_for(chrono::seconds(1));
+		cout << "NO TICKETS. EXITING... " << endl;
+		return;
+	}
+
+	//show seating arrangement before boarding
 	cout << "Initial seating arrangement:" << endl;
     printPlane();
 
+	//board the passengers
     announcePassengers();
 
-    cout << "Final seating arrangement:" << endl;
-    printPlane();
-
-	takeoff();
+	//if there aren't any passengers with valid tickets, don't take off, otherwise print final plane
+	if(numPassengers == 0)
+		cout << "NO PASSENGERS. PLANE NOT TAKING OFF" << endl;
+	else{
+		cout << "All passengers have been boarded." << endl;
+		cout << "Final seating arrangement:" << endl;
+		printPlane();
+		takeoff();
+	}
 }

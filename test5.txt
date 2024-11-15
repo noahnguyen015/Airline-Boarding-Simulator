@@ -1,0 +1,10 @@
+TestGuy 1 G7 ELITE FirstClass false false
+TestGuy 2 A7 NONE FirstClass false false
+TestGuy 3 Z2 NONE FirstClass false false
+TestGuy 4 B7 NONE FirstClass false false
+TestGuy 5 F1 NONE FirstClass false false
+
+TestGuy 6 F1 NONE Economy false false
+TestGuy 7 F1 NONE Economy false false
+TestGuy 8 C1 NONE Economy false false
+TestGuy 9 C1 NONE Economy false false

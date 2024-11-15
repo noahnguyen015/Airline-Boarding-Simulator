@@ -15,7 +15,7 @@ planeTicket::planeTicket(string firstName, string lastName, string seatNumber, s
 //overloader to check ticket data
 ostream& operator<<(ostream &os, planeTicket& ticket){
 	os << ticket.firstName << " " << ticket.lastName << ", ";
-	os << ticket.seatNumber << " ";
+	os << ticket.seatNumber << ", ";
 	os << ticket.cardType << ", ";
 	os << ticket.classType << ", ";
     os << (ticket.specialNeeds ? "true" : "false") << ", ";

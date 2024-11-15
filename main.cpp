@@ -8,7 +8,11 @@ int main() {
 
 	Plane plane;
 
-    plane.simulateSeating();
+    plane.simulateSeating("test.txt");
+    //plane.simulateSeating("test2.txt");
+    //plane.simulateSeating("test3.txt");
+    //plane.simulateSeating("test4.txt");
+    //plane.simulateSeating("test5.txt");
 
     return 0;
 }
