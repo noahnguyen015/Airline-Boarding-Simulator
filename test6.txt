@@ -1,0 +1,12 @@
+Stephen Curry A1 ELITE FirstClass false false
+Buddy Hield B1 SILVER FirstClass false false
+Draymond Green C1 ELITE FirstClass false false
+Kevon Looney D1 NONE FirstClass false false
+Jonathan Kuminga A2 GOLD FirstClass false false
+Andrew Wiggins B2 SILVER FirstClass false false
+Moses Moody C2 NONE FirstClass false false
+Trayce Jackson-Davis D2 NONE FirstClass false false
+Brandin Podziemski A3 NONE FirstClass false false
+De'Anthony Melton B3 NONE FirstClass false false
+Kyle Anderson C3 NONE FirstClass false false
+Steve Kerr D3 ELITE FirstClass false false 

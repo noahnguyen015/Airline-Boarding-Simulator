@@ -194,7 +194,11 @@ void Plane::takeoff()
 	cout <<"                    // ,/" << endl;
 	cout <<"                   //_/" << endl;
 	cout << endl;
-	cout <<"HAVE A NICE FLIGHT! " << endl << "Number of Passengers: " << numPassengers << endl;
+	cout << "Number of Passengers: " << numPassengers << endl;
+	cout <<"HAVE A NICE FLIGHT! " << endl;
+		if (numPassengers == 62){
+		cout << "The plane is full. All seats have been filled." << endl;
+	}
 
 /*
                       ___

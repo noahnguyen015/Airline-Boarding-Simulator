@@ -1,0 +1,9 @@
+Person 1 A1 ELITE Business false false
+Person 2 B3 ELITE Business false false
+Person 3 C2 ELITE Business false false
+Person 4 D5 ELITE Business false false
+Person 5 A1 NONE Economy false false
+Person 6 B2 NONE Economy false false
+Person 7 C2 NONE Economy false false
+Person 8 D2 NONE Economy false false
+Person 8 D1 NONE Economy false false
